@@ -1,10 +1,14 @@
 <IfModule mod_rewrite.c>
   RewriteEngine On
-  RewriteBase /
-  RewriteRule ^index\.html$ - [L]
+  
+  # Arahkan domain utama langsung ke folder dist
+  RewriteRule ^$ dist/index.html [L]
+
+  # Arahkan semua request aset (js/css) ke folder dist
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule . /index.html [L]
+  RewriteCond %{REQUEST_URI} !^/dist/
+  RewriteRule ^(.*)$ dist/$1 [L]
 </IfModule>
 
 <IfModule mod_headers.c>
